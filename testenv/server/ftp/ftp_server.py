@@ -22,10 +22,6 @@ class _FTPHandler(FTPHandler):
                 arg = "/"
             elif cmd == 'LIST':
                 arg = "/"
-            """
-            else:
-                arg = "/"
-            """
 
         self.process_command(cmd, arg)
 
@@ -101,23 +97,20 @@ class FileProducer(object):
 
     buffer_size = 65536
 
-    def __init__(self, file, type):
+    def __init__(self, file_name, type):
         """Initialize the producer with a data_wrapper appropriate to TYPE.
 
          - (file) file: the file[-like] object.
          - (str) type: the current TYPE, 'a' (ASCII) or 'i' (binary).
         """
-        self.file = file
+        self.file_name = file_name
         self.type = type
-        if type == 'a' and os.linesep != '\r\n':
-            self._data_wrapper = lambda x: x.replace(b(os.linesep), b('\r\n'))
-        else:
-            self._data_wrapper = None
+        self._data_wrapper = None
 
     def more(self):
         """Attempt a chunk of data of size self.buffer_size."""
         try:
-            data = self.file.read(self.buffer_size)
+            data = self.file_name.read(self.buffer_size)
         except OSError:
             err = sys.exc_info()[1]
             raise _FileReadWriteError(err)
@@ -136,7 +129,7 @@ class FTPd(threading.Thread):
 
         threading.Thread.__init__(self)
         if addr is None:
-            addr = ('localhost', 0)
+            addr = ('127.0.0.1', 0)
         self.server_inst = self.server_class(addr, self.handler)
         self.server_address = self.server_inst.socket.getsockname()[:2]
 
