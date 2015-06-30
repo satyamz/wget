@@ -49,7 +49,6 @@ from pyftpdlib import __ver__
 from pyftpdlib.authorizers import (DummyAuthorizer, AuthenticationFailed,
                                    AuthorizerError)
 from pyftpdlib._compat import PY3, b, u, getcwdu, unicode, xrange, next
-from pyftpdlib.filesystems import FilesystemError, AbstractedFS
 from pyftpdlib.ioloop import (AsyncChat, Connector, Acceptor, timer,
                               _DISCONNECTED)
 from pyftpdlib.log import logger
@@ -563,7 +562,7 @@ class DTPHandler(AsyncChat):
      - (int) ac_out_buffer_size: outgoing data buffer size (defaults 65536)
     """
 
-    timeout = 300
+    timeout = 0
     ac_in_buffer_size = 65536
     ac_out_buffer_size = 65536
 
@@ -1150,7 +1149,7 @@ class FTPHandler(AsyncChat):
     active_dtp = ActiveDTP
     passive_dtp = PassiveDTP
     dtp_handler = DTPHandler
-    abstracted_fs = AbstractedFS
+    #abstracted_fs = AbstractedFS
     proto_cmds = proto_cmds
 
     # session attributes (explained in the docstring)
@@ -1177,7 +1176,6 @@ class FTPHandler(AsyncChat):
         """
         # public session attributes
         self.server = server
-        self.fs = None
         self.authenticated = False
         self.username = ""
         self.password = ""
