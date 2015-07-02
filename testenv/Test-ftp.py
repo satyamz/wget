@@ -14,18 +14,14 @@ File1 = "Beyond the fog lies clarity"
 # Define directory structure by creating WgetFile object.
 # Here URL path is /Foo/Bar/File1
 # hence creating Foo and Bar directories
-# Make the flag isdir=True and add parent 
+# Make the flag isdir=True and add parent
 
-
-Foo = WgetFile("Foo", parent="/", isdir=True)
-Bar = WgetFile("Bar", parent="Foo", isdir=True)
-
-A_File = WgetFile("File1", File1, parent="Bar")
+A_File = WgetFile("File1", File1, parent="/Foo")
 
 WGET_OPTIONS = " -S "
-WGET_URLS = [["/Foo/Bar/File1"]]
+WGET_URLS = [["/Foo/File1"]]
 
-Files = [[A_File, Foo, Bar]]
+Files = [[A_File]]
 
 Servers = [FTP]
 
