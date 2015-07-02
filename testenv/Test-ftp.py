@@ -11,12 +11,21 @@ TEST_NAME = "FTP Downloads"
 ########## File Definitions ######################################
 File1 = "Beyond the fog lies clarity"
 
-A_File = WgetFile("File1", File1)
+# Define directory structure by creating WgetFile object.
+# Here URL path is /Foo/Bar/File1
+# hence creating Foo and Bar directories
+# Make the flag isdir=True and add parent 
+
+
+Foo = WgetFile("Foo", parent="/", isdir=True)
+Bar = WgetFile("Bar", parent="Foo", isdir=True)
+
+A_File = WgetFile("File1", File1, parent="Bar")
 
 WGET_OPTIONS = " -S "
-WGET_URLS = [["File1"]]
+WGET_URLS = [["/Foo/Bar/File1"]]
 
-Files = [[A_File]]
+Files = [[A_File, Foo, Bar]]
 
 Servers = [FTP]
 

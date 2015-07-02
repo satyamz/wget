@@ -9,10 +9,12 @@ class WgetFile:
         content="Test Contents",
         timestamp=None,
         rules=None,
-        file_perm=None
+        parent=None,
+        isdir=False
 	):
         self.name = name
         self.content = content
         self.timestamp = timestamp
         self.rules = rules or {}
-        self.file_perm = file_perm
+        self.parent = parent
+        self.isdir = isdir
