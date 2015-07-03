@@ -13,7 +13,7 @@ File1 = "Beyond the fog lies clarity"
 
 # Define directory structure by creating WgetFile object.
 # Here URL path is /Foo/File1
-# hence creating Foo and Bar is directory
+# hence creating Foo is directory
 # Make the flag isdir=True and add parent
 
 A_File = WgetFile("File1", File1, parent="/Foo")
