@@ -16,10 +16,10 @@ File1 = "Beyond the fog lies clarity"
 # hence creating Foo is directory
 # Make the flag isdir=True and add parent
 
-A_File = WgetFile("File1", File1, parent="/Foo")
+A_File = WgetFile("File1", File1, parent="Foo")
 
 WGET_OPTIONS = " -r "
-WGET_URLS = [["/Foo/File1"]]
+WGET_URLS = [["Foo/File1"]]
 
 Files = [[A_File]]
 
@@ -50,4 +50,3 @@ err = FTPTest(
 ).begin()
 
 exit(err)
-

@@ -13,16 +13,8 @@ class StoppableFTPServer(FTPServer):
 
 
 class _FTPHandler(FTPHandler):
-    def pre_process_command(self, line, cmd, arg):
-        """
-        Overriding method to remove filesystem dependencies
-        """
-        if self.proto_cmds[cmd]['perm']:
-            if cmd == 'CWD':
-                arg = "/"
-            elif cmd == 'LIST':
-                arg = "/"
 
+    def pre_process_command(self, line, cmd, arg):
         self.process_command(cmd, arg)
 
     def ftp_USER(self, line):
@@ -72,7 +64,7 @@ class _FTPHandler(FTPHandler):
         self._restart_position = 0
 
         """ We have requested file name. So retriving the contents of file
-        name"""
+        name """
 
         file_contents = self.server.fileSys[file]
 

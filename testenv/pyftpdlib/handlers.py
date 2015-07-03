@@ -1183,6 +1183,7 @@ class FTPHandler(AsyncChat):
         self.data_channel = None
         self.remote_ip = ""
         self.remote_port = ""
+        self.current_dir = "/"
 
         # private session attributes
         self._last_response = ""
@@ -1771,7 +1772,8 @@ class FTPHandler(AsyncChat):
             date = "Aug 08"
             ftime = "8:10"
             line = "%s %3s %3s %3s %3s %3s %3s" %(
-                    perm, nlinks, uname, gname, size, date, ftime, filename)
+                    perm, nlinks, uname, gname,
+                    size, date, ftime, filename)
             yield line
 
 
@@ -2543,9 +2545,9 @@ class FTPHandler(AsyncChat):
         # The 257 response is supposed to include the directory
         # name and in case it contains embedded double-quotes
         # they must be doubled (see RFC-959, chapter 7, appendix 2).
-        cwd = "/"
+        self.current_dir = "/"
         self.respond('257 "%s" is the current directory.'
-                     % cwd.replace('"', '""'))
+                     % self.current_dir.replace('"', '""'))
 
     def ftp_CWD(self, path):
         """Change the current working directory.
@@ -2562,13 +2564,13 @@ class FTPHandler(AsyncChat):
         # will fail with ENOENT) but we can't do anything about that
         # except logging an error.
         try:
-            cwd = "/"
+            self.current_dir = path
         except Exception:
             why = "Unable to change directory"
             self.respond('550 %s.' % why)
 
         else:
-            self.respond('250 "%s" is the current directory.' % cwd)
+            self.respond('250 "%s" is the current directory.' % self.current_dir)
             return path
     """
     def ftp_CDUP(self, path):
