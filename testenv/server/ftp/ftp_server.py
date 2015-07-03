@@ -7,9 +7,12 @@ import os
 
 
 class StoppableFTPServer(FTPServer):
-    def server_conf(self, filelist, conf_dict):
+    def server_conf(
+                    self, filelist,
+                    conf_dict, files_metadata):
         self.server_configs = conf_dict
         self.fileSys = filelist
+        self.files_metadata = files_metadata
 
 
 class _FTPHandler(FTPHandler):
@@ -136,5 +139,7 @@ class FTPd(threading.Thread):
     def run(self):
         self.server_inst.serve_forever()
 
-    def server_conf(self, file_list, server_rules):
-        self.server_inst.server_conf(file_list, server_rules)
+    def server_conf(
+                    self, file_list,
+                    server_rules, files_metadata):
+        self.server_inst.server_conf(file_list, server_rules, files_metadata)

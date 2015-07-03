@@ -23,4 +23,6 @@ class ServerFiles:
                              for f in files}
             files_rules = {f.name: test_obj.get_server_rules(f)
                            for f in files}
-            server.server_conf(files_content, files_rules)
+            files_metadata = {f.name: test_obj._replace_substring(f.parent)
+                            for f in files}
+            server.server_conf(files_content, files_rules, files_metadata)
